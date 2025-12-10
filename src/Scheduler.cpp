@@ -1,7 +1,6 @@
 /**
  * @file Scheduler.cpp
  * @brief Implementation of the abstract Scheduler base class
- * @author CPU Scheduler Team
  * @version 1.0
  */
 

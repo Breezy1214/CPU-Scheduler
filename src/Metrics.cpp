@@ -1,7 +1,6 @@
 /**
  * @file Metrics.cpp
  * @brief Implementation of the Metrics class
- * @author CPU Scheduler Team
  * @version 1.0
  */
 

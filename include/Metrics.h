@@ -1,7 +1,6 @@
 /**
  * @file Metrics.h
  * @brief Performance metrics calculation and storage
- * @author CPU Scheduler Team
  * @version 1.0
  */
 

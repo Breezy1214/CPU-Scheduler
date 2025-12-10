@@ -1,7 +1,6 @@
 /**
  * @file RoundRobinScheduler.cpp
  * @brief Implementation of Round Robin scheduling algorithm
- * @author CPU Scheduler Team
  * @version 1.0
  */
 

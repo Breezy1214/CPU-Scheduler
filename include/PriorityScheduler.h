@@ -1,7 +1,6 @@
 /**
  * @file PriorityScheduler.h
  * @brief Priority-based scheduling algorithm implementation
- * @author CPU Scheduler Team
  * @version 1.0
  */
 

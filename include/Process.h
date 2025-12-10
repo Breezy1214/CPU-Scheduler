@@ -1,7 +1,6 @@
 /**
  * @file Process.h
  * @brief Process class definition for CPU Scheduler Simulator
- * @author CPU Scheduler Team
  * @version 1.0
  */
 

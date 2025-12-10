@@ -1,7 +1,6 @@
 /**
  * @file Visualizer.h
  * @brief Text-based visualization for CPU scheduler
- * @author CPU Scheduler Team
  * @version 1.0
  */
 

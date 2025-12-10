@@ -1,0 +1,41 @@
+# Doxyfile for CPU Scheduler Simulator
+
+PROJECT_NAME           = "CPU Scheduler Simulator"
+PROJECT_NUMBER         = 1.0
+PROJECT_BRIEF          = "Advanced CPU Scheduling Algorithm Simulator"
+
+OUTPUT_DIRECTORY       = doc
+CREATE_SUBDIRS         = NO
+
+INPUT                  = src include README.md
+RECURSIVE              = YES
+FILE_PATTERNS          = *.cpp *.h *.md
+
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+GENERATE_LATEX         = NO
+
+JAVADOC_AUTOBRIEF      = YES
+QT_AUTOBRIEF           = YES
+
+HAVE_DOT               = YES
+CLASS_DIAGRAMS         = YES
+COLLABORATION_GRAPH    = YES
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = NO
+
+ALPHABETICAL_INDEX     = YES
+COLS_IN_ALPHA_INDEX    = 5
+
+GENERATE_TREEVIEW      = YES
+
+PREDEFINED             = __cplusplus
+
+OPTIMIZE_OUTPUT_FOR_C  = NO

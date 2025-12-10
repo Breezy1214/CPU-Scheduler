@@ -1,7 +1,6 @@
 /**
  * @file Scheduler.h
  * @brief Abstract base class for CPU scheduling algorithms
- * @author CPU Scheduler Team
  * @version 1.0
  */
 

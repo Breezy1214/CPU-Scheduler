@@ -1,7 +1,6 @@
 /**
  * @file Simulator.h
  * @brief Main simulation controller
- * @author CPU Scheduler Team
  * @version 1.0
  */
 

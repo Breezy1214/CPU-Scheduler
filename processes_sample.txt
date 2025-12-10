@@ -1,0 +1,16 @@
+# Sample Process Input File
+# Format: PID Priority BurstTime ArrivalTime
+# Priority: Lower number = Higher priority (0-10)
+# Times in arbitrary time units
+
+PID Priority BurstTime ArrivalTime
+1 2 10 0
+2 1 5 1
+3 3 8 2
+4 2 4 3
+5 4 6 4
+6 1 12 5
+7 3 7 6
+8 2 9 7
+9 4 5 8
+10 1 11 9

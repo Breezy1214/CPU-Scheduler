@@ -1,7 +1,6 @@
 /**
  * @file Process.cpp
  * @brief Implementation of the Process class
- * @author CPU Scheduler Team
  * @version 1.0
  */
 

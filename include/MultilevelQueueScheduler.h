@@ -1,7 +1,6 @@
 /**
  * @file MultilevelQueueScheduler.h
  * @brief Multilevel Queue scheduling algorithm implementation
- * @author CPU Scheduler Team
  * @version 1.0
  */
 

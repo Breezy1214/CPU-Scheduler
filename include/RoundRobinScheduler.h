@@ -1,7 +1,6 @@
 /**
  * @file RoundRobinScheduler.h
  * @brief Round Robin scheduling algorithm implementation
- * @author CPU Scheduler Team
  * @version 1.0
  */
 
