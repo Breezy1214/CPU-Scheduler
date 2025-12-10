@@ -41,7 +41,6 @@ The simulator calculates and displays:
 ```bash
 - C++17 compatible compiler (g++ 7.0+, clang++ 5.0+)
 - GNU Make
-- Google Test (optional, for running tests)
 ```
 
 ### Building
@@ -162,14 +161,14 @@ make lint       # Run static analysis
 
 ## 🧪 Testing
 
-Comprehensive test suite using Google Test framework:
+Comprehensive test suite:
 
 ```bash
 # Run all tests
 make test
 
-# Run specific test
-./bin/test_runner --gtest_filter=SchedulerTest.RoundRobinExecution
+# Or run the test executable directly
+./bin/test_runner
 ```
 
 ### Test Coverage

@@ -3,113 +3,128 @@
  * @brief Unit tests for Process class
  */
 
-#include <gtest/gtest.h>
 #include "Process.h"
+#include <iostream>
+#include <stdexcept>
 
-class ProcessTest : public ::testing::Test {
-protected:
-    void SetUp() override {
-        // Common setup for tests
-    }
-};
+#define ASSERT_EQ(a, b) if ((a) != (b)) throw std::runtime_error("Assertion failed: " #a " != " #b)
+#define ASSERT_TRUE(a) if (!(a)) throw std::runtime_error("Assertion failed: " #a " is not true")
+#define ASSERT_FALSE(a) if ((a)) throw std::runtime_error("Assertion failed: " #a " is not false")
+#define ASSERT_GT(a, b) if ((a) <= (b)) throw std::runtime_error("Assertion failed: " #a " not greater than " #b)
+#define ASSERT_GE(a, b) if ((a) < (b)) throw std::runtime_error("Assertion failed: " #a " not greater than or equal to " #b)
 
-TEST_F(ProcessTest, DefaultConstructor) {
+void test_default_constructor() {
     Process p;
-    EXPECT_EQ(p.getPid(), 0);
-    EXPECT_EQ(p.getPriority(), 0);
-    EXPECT_EQ(p.getBurstTime(), 0);
-    EXPECT_EQ(p.getArrivalTime(), 0);
-    EXPECT_EQ(p.getState(), ProcessState::NEW);
+    ASSERT_EQ(p.getPid(), 0);
+    ASSERT_EQ(p.getPriority(), 0);
+    ASSERT_EQ(p.getBurstTime(), 0);
+    ASSERT_EQ(p.getArrivalTime(), 0);
+    ASSERT_EQ(p.getState(), ProcessState::NEW);
 }
 
-TEST_F(ProcessTest, ParameterizedConstructor) {
+void test_parameterized_constructor() {
     Process p(1, 5, 10, 2, "TestProcess");
-    EXPECT_EQ(p.getPid(), 1);
-    EXPECT_EQ(p.getPriority(), 5);
-    EXPECT_EQ(p.getBurstTime(), 10);
-    EXPECT_EQ(p.getArrivalTime(), 2);
-    EXPECT_EQ(p.getRemainingTime(), 10);
-    EXPECT_EQ(p.getName(), "TestProcess");
+    ASSERT_EQ(p.getPid(), 1);
+    ASSERT_EQ(p.getPriority(), 5);
+    ASSERT_EQ(p.getBurstTime(), 10);
+    ASSERT_EQ(p.getArrivalTime(), 2);
+    ASSERT_EQ(p.getRemainingTime(), 10);
+    ASSERT_EQ(p.getName(), "TestProcess");
 }
 
-TEST_F(ProcessTest, ExecuteReducesRemainingTime) {
+void test_execute_reduces_remaining_time() {
     Process p(1, 1, 10, 0);
     int executed = p.execute(3);
-    EXPECT_EQ(executed, 3);
-    EXPECT_EQ(p.getRemainingTime(), 7);
+    ASSERT_EQ(executed, 3);
+    ASSERT_EQ(p.getRemainingTime(), 7);
 }
 
-TEST_F(ProcessTest, ExecuteDoesNotExceedRemainingTime) {
+void test_execute_does_not_exceed_remaining_time() {
     Process p(1, 1, 5, 0);
     int executed = p.execute(10);
-    EXPECT_EQ(executed, 5);
-    EXPECT_EQ(p.getRemainingTime(), 0);
+    ASSERT_EQ(executed, 5);
+    ASSERT_EQ(p.getRemainingTime(), 0);
 }
 
-TEST_F(ProcessTest, StateTransitions) {
+void test_state_transitions() {
     Process p(1, 1, 10, 0);
-    EXPECT_EQ(p.getState(), ProcessState::NEW);
+    ASSERT_EQ(p.getState(), ProcessState::NEW);
     
     p.setState(ProcessState::READY);
-    EXPECT_EQ(p.getState(), ProcessState::READY);
+    ASSERT_EQ(p.getState(), ProcessState::READY);
     
     p.setState(ProcessState::RUNNING);
-    EXPECT_EQ(p.getState(), ProcessState::RUNNING);
+    ASSERT_EQ(p.getState(), ProcessState::RUNNING);
     
     p.setState(ProcessState::TERMINATED);
-    EXPECT_EQ(p.getState(), ProcessState::TERMINATED);
+    ASSERT_EQ(p.getState(), ProcessState::TERMINATED);
 }
 
-TEST_F(ProcessTest, ResponseTimeTracking) {
+void test_response_time_tracking() {
     Process p(1, 1, 10, 0);
-    EXPECT_EQ(p.getResponseTime(), -1);  // Not yet started
+    ASSERT_EQ(p.getResponseTime(), -1);  // Not yet started
     
     p.setResponseTime(5);
-    EXPECT_EQ(p.getResponseTime(), 5);
+    ASSERT_EQ(p.getResponseTime(), 5);
 }
 
-TEST_F(ProcessTest, WaitingTimeIncrement) {
+void test_waiting_time_increment() {
     Process p(1, 1, 10, 0);
-    EXPECT_EQ(p.getWaitingTime(), 0);
+    ASSERT_EQ(p.getWaitingTime(), 0);
     
     p.incrementWaitingTime(3);
-    EXPECT_EQ(p.getWaitingTime(), 3);
+    ASSERT_EQ(p.getWaitingTime(), 3);
     
     p.incrementWaitingTime(2);
-    EXPECT_EQ(p.getWaitingTime(), 5);
+    ASSERT_EQ(p.getWaitingTime(), 5);
 }
 
-TEST_F(ProcessTest, CompletionCheck) {
+void test_completion_check() {
     Process p(1, 1, 5, 0);
-    EXPECT_FALSE(p.isCompleted());
+    ASSERT_FALSE(p.isCompleted());
     
     p.execute(5);
-    EXPECT_EQ(p.getRemainingTime(), 0);
+    ASSERT_EQ(p.getRemainingTime(), 0);
 }
 
-TEST_F(ProcessTest, QueueLevelManagement) {
+void test_queue_level_management() {
     Process p(1, 1, 10, 0);
-    EXPECT_EQ(p.getQueueLevel(), 0);
+    ASSERT_EQ(p.getQueueLevel(), 0);
     
     p.setQueueLevel(2);
-    EXPECT_EQ(p.getQueueLevel(), 2);
+    ASSERT_EQ(p.getQueueLevel(), 2);
 }
 
-TEST_F(ProcessTest, PriorityModification) {
+void test_priority_modification() {
     Process p(1, 5, 10, 0);
-    EXPECT_EQ(p.getPriority(), 5);
+    ASSERT_EQ(p.getPriority(), 5);
     
     p.setPriority(3);
-    EXPECT_EQ(p.getPriority(), 3);
+    ASSERT_EQ(p.getPriority(), 3);
 }
 
-TEST_F(ProcessTest, ResetFunctionality) {
+void test_reset_functionality() {
     Process p(1, 1, 10, 0);
     p.execute(5);
     p.setState(ProcessState::RUNNING);
     p.setResponseTime(3);
     
     p.resetExecution();
-    EXPECT_EQ(p.getRemainingTime(), 10);
-    EXPECT_FALSE(p.hasStartedExecution());
+    ASSERT_EQ(p.getRemainingTime(), 10);
+    ASSERT_FALSE(p.hasStartedExecution());
+}
+
+void test_process() {
+    std::cout << "  Testing Process class..." << std::endl;
+    test_default_constructor();
+    test_parameterized_constructor();
+    test_execute_reduces_remaining_time();
+    test_execute_does_not_exceed_remaining_time();
+    test_state_transitions();
+    test_response_time_tracking();
+    test_waiting_time_increment();
+    test_completion_check();
+    test_queue_level_management();
+    test_priority_modification();
+    test_reset_functionality();
 }

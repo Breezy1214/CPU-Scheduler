@@ -45,7 +45,6 @@ The CPU Scheduler Simulator is a comprehensive educational tool designed to help
 
 - C++ compiler with C++17 support (g++, clang++)
 - Make build system
-- Google Test library (for running tests)
 
 ### Building from Source
 
@@ -386,11 +385,8 @@ make build
 
 **Problem: Tests fail**
 ```bash
-# Install Google Test
-# Ubuntu/Debian:
-sudo apt-get install libgtest-dev
-
-# Build and run tests
+# Rebuild and run tests
+make clean
 make test
 ```
 

@@ -33,7 +33,7 @@ The CPU Scheduler Simulator is a comprehensive C++ application designed to simul
 
 - **Language**: C++17
 - **Build System**: GNU Make
-- **Testing Framework**: Google Test
+- **Testing Framework**: Custom test framework
 - **Documentation**: Doxygen, Markdown
 - **Version Control**: Git
 
@@ -500,18 +500,18 @@ struct SimulationConfig {
 3. **Metrics**: Calculation accuracy
 4. **Simulator**: Process generation, file I/O
 
-**Test Framework**: Google Test
+**Test Framework**: Custom test framework with assertion macros
 
 **Example Test**:
 ```cpp
-TEST_F(SchedulerTest, RoundRobinContextSwitches) {
+void test_round_robin_context_switches() {
     RoundRobinScheduler scheduler(2);
     scheduler.addProcess(Process(1, 0, 10, 0));
     scheduler.addProcess(Process(2, 0, 10, 0));
     scheduler.run();
     
     const Metrics& metrics = scheduler.getMetrics();
-    EXPECT_GT(metrics.getTotalContextSwitches(), 0);
+    ASSERT_GT(metrics.getTotalContextSwitches(), 0);
 }
 ```
 

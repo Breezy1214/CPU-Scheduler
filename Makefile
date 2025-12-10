@@ -33,10 +33,6 @@ OBJECTS_DEBUG := $(SOURCES:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%_debug.o)
 TEST_SOURCES := $(wildcard $(TEST_DIR)/*.cpp)
 TEST_OBJECTS := $(TEST_SOURCES:$(TEST_DIR)/%.cpp=$(BUILD_DIR)/test_%.o)
 
-# Google Test configuration
-GTEST_DIR := /usr/local/include/gtest
-GTEST_LIB := -lgtest -lgtest_main
-
 # Colors for output
 RED := \033[0;31m
 GREEN := \033[0;32m
@@ -118,7 +114,7 @@ $(TARGET_DEBUG): $(OBJECTS_DEBUG) $(BUILD_DIR)/main_debug.o
 # Link test executable
 $(TEST_TARGET): $(filter-out $(BUILD_DIR)/main.o, $(OBJECTS)) $(TEST_OBJECTS)
 	@echo "$(BLUE)Linking test suite...$(NC)"
-	@$(CXX) $(CXXFLAGS) $(DEBUG_FLAGS) $^ -o $@ $(LDFLAGS) $(LIBS) $(GTEST_LIB)
+	@$(CXX) $(CXXFLAGS) $(DEBUG_FLAGS) $^ -o $@ $(LDFLAGS) $(LIBS)
 
 # Compile release object files
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(HEADERS)
