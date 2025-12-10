@@ -147,8 +147,9 @@ public:
     /**
      * @brief Export metrics to CSV format
      * @param filename Output filename
+     * @return true if export successful, false otherwise
      */
-    void exportToCSV(const std::string& filename) const;
+    bool exportToCSV(const std::string& filename) const;
 
     /**
      * @brief Compare two metrics objects

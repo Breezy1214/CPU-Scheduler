@@ -3,7 +3,12 @@
 CXX := g++
 CXXFLAGS := -std=c++17 -Wall -Wextra -Wpedantic -Iinclude
 LDFLAGS := 
-LIBS := -pthread
+# Platform-specific threading library
+ifeq ($(OS),Windows_NT)
+    LIBS := 
+else
+    LIBS := -pthread
+endif
 
 # Optimization flags
 RELEASE_FLAGS := -O3 -DNDEBUG
@@ -148,7 +153,8 @@ $(BUILD_DIR)/test_%.o: $(TEST_DIR)/%.cpp $(HEADERS)
 # Create necessary directories
 .PHONY: directories
 directories:
-	@mkdir -p $(BUILD_DIR) $(BIN_DIR)
+	@test -d $(BUILD_DIR) || mkdir $(BUILD_DIR)
+	@test -d $(BIN_DIR) || mkdir $(BIN_DIR)
 
 # Build and run
 .PHONY: run

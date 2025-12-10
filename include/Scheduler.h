@@ -184,6 +184,12 @@ public:
     int getContextSwitches() const { return contextSwitches; }
 
     /**
+     * @brief Get current running process
+     * @return Pointer to current process, nullptr if none
+     */
+    Process* getCurrentProcess() const { return currentProcess; }
+
+    /**
      * @brief Set scheduler configuration
      * @param cfg New configuration
      */

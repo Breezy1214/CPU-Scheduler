@@ -65,17 +65,16 @@ int PriorityScheduler::findHighestPriority() {
 }
 
 bool PriorityScheduler::shouldPreempt(const Process& arriving) {
-    if (!preemptive || currentProcessIdx == -1) {
+    if (!preemptive || currentProcess == nullptr) {
         return false;
     }
     
-    const Process& current = processes[currentProcessIdx];
-    return arriving.getPriority() < current.getPriority();
+    return arriving.getPriority() < currentProcess->getPriority();
 }
 
 void PriorityScheduler::run() {
     currentTime = 0;
-    currentProcessIdx = -1;
+    int currentProcessIdx = -1;
     timeline.clear();
     
     // Set all processes to READY state
@@ -85,7 +84,7 @@ void PriorityScheduler::run() {
         } else {
             p.setState(ProcessState::NEW);
         }
-        p.resetExecution();
+        p.reset();
     }
     
     int completedProcesses = 0;
@@ -121,8 +120,9 @@ void PriorityScheduler::run() {
                 selected.setState(ProcessState::RUNNING);
                 
                 // Record response time on first execution
-                if (!selected.hasStartedExecution()) {
+                if (!selected.getHasStarted()) {
                     selected.setResponseTime(currentTime - selected.getArrivalTime());
+                    selected.setHasStarted(true);
                 }
                 
                 // Context switch overhead
@@ -133,7 +133,6 @@ void PriorityScheduler::run() {
                 waitingSince.erase(selected.getPid());
             } else {
                 // CPU idle - no ready processes
-                idleTime++;
                 currentTime++;
                 continue;
             }
@@ -155,7 +154,7 @@ void PriorityScheduler::run() {
         for (auto& p : processes) {
             if (p.getState() == ProcessState::READY && 
                 p.getArrivalTime() <= currentTime) {
-                p.incrementWaitingTime(actualTime);
+                p.setWaitingTime(p.getWaitingTime() + actualTime);
             }
         }
         

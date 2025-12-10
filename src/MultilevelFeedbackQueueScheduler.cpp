@@ -105,7 +105,6 @@ void MultilevelFeedbackQueueScheduler::addProcess(const Process& process) {
 
 void MultilevelFeedbackQueueScheduler::run() {
     currentTime = 0;
-    currentProcessIdx = -1;
     timeline.clear();
     lastBoostTime = 0;
     
@@ -122,7 +121,7 @@ void MultilevelFeedbackQueueScheduler::run() {
     // Set initial process states
     for (size_t i = 0; i < processes.size(); ++i) {
         Process& p = processes[i];
-        p.resetExecution();
+        p.reset();
         p.setQueueLevel(0);
         processQueueMap[p.getPid()] = 0;
         timeInQueue[p.getPid()] = 0;
@@ -169,8 +168,9 @@ void MultilevelFeedbackQueueScheduler::run() {
                 p.setState(ProcessState::RUNNING);
                 
                 // Record response time on first execution
-                if (!p.hasStartedExecution()) {
+                if (!p.getHasStarted()) {
                     p.setResponseTime(currentTime - p.getArrivalTime());
+                    p.setHasStarted(true);
                 }
                 
                 // Context switch overhead
@@ -194,7 +194,7 @@ void MultilevelFeedbackQueueScheduler::run() {
                     if (proc.getState() == ProcessState::READY && 
                         proc.getArrivalTime() <= currentTime &&
                         proc.getPid() != p.getPid()) {
-                        proc.incrementWaitingTime(actualTime);
+                        proc.setWaitingTime(proc.getWaitingTime() + actualTime);
                     }
                 }
                 
@@ -221,7 +221,6 @@ void MultilevelFeedbackQueueScheduler::run() {
             }
         } else {
             // CPU idle
-            idleTime++;
             currentTime++;
         }
     }
@@ -238,14 +237,6 @@ Process* MultilevelFeedbackQueueScheduler::getNextProcess() {
     
     int processIdx = queues[activeQueue].front();
     return &processes[processIdx];
-}
-
-std::string MultilevelFeedbackQueueScheduler::getName() const {
-    return "Multilevel Feedback Queue (" + std::to_string(numQueues) + " levels)";
-}
-
-SchedulerType MultilevelFeedbackQueueScheduler::getType() const {
-    return SchedulerType::MULTILEVEL_FEEDBACK_QUEUE;
 }
 
 void MultilevelFeedbackQueueScheduler::reset() {

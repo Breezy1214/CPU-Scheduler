@@ -95,8 +95,9 @@ bool MultilevelQueueScheduler::executeQueue(int queueIdx) {
     p.setState(ProcessState::RUNNING);
     
     // Record response time on first execution
-    if (!p.hasStartedExecution()) {
+    if (!p.getHasStarted()) {
         p.setResponseTime(currentTime - p.getArrivalTime());
+        p.setHasStarted(true);
     }
     
     // Context switch overhead
@@ -120,7 +121,7 @@ bool MultilevelQueueScheduler::executeQueue(int queueIdx) {
         if (proc.getState() == ProcessState::READY && 
             proc.getArrivalTime() <= currentTime &&
             proc.getPid() != p.getPid()) {
-            proc.incrementWaitingTime(actualTime);
+            proc.setWaitingTime(proc.getWaitingTime() + actualTime);
         }
     }
     
@@ -147,7 +148,6 @@ void MultilevelQueueScheduler::addProcess(const Process& process) {
 
 void MultilevelQueueScheduler::run() {
     currentTime = 0;
-    currentProcessIdx = -1;
     timeline.clear();
     
     // Initialize queues and process states
@@ -159,7 +159,7 @@ void MultilevelQueueScheduler::run() {
         Process& p = processes[i];
         int queueIdx = assignToQueue(p);
         p.setQueueLevel(queueIdx);
-        p.resetExecution();
+        p.reset();
         
         if (p.getArrivalTime() == 0) {
             p.setState(ProcessState::READY);
@@ -199,7 +199,6 @@ void MultilevelQueueScheduler::run() {
             }
         } else {
             // CPU idle
-            idleTime++;
             currentTime++;
         }
     }
@@ -216,14 +215,6 @@ Process* MultilevelQueueScheduler::getNextProcess() {
     
     int processIdx = queues[activeQueue].front();
     return &processes[processIdx];
-}
-
-std::string MultilevelQueueScheduler::getName() const {
-    return "Multilevel Queue (" + std::to_string(numQueues) + " levels)";
-}
-
-SchedulerType MultilevelQueueScheduler::getType() const {
-    return SchedulerType::MULTILEVEL_QUEUE;
 }
 
 void MultilevelQueueScheduler::reset() {

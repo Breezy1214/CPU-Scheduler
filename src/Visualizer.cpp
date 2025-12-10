@@ -12,6 +12,10 @@
 #include <chrono>
 #include <cmath>
 
+#ifdef _WIN32
+    #include <windows.h>
+#endif
+
 // ANSI color codes
 const std::string Visualizer::RESET = "\033[0m";
 const std::string Visualizer::RED = "\033[31m";
@@ -343,6 +347,12 @@ void Visualizer::printSeparator() const {
 
 void Visualizer::wait(int ms) const {
     if (animationEnabled && ms > 0) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(ms));
+        #ifdef _WIN32
+            // Use Windows Sleep on Windows
+            #include <windows.h>
+            Sleep(ms);
+        #else
+            std::this_thread::sleep_for(std::chrono::milliseconds(ms));
+        #endif
     }
 }

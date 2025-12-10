@@ -7,6 +7,7 @@
 #include "RoundRobinScheduler.h"
 #include <iostream>
 #include <algorithm>
+#include <climits>
 
 RoundRobinScheduler::RoundRobinScheduler(int quantum, const SchedulerConfig& config)
     : Scheduler(config)
