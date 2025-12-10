@@ -1,13 +1,12 @@
 # CPU Scheduler Simulator
 
-[![Build Status](https://github.com/Breezy1214/CPU-Scheduler/workflows/CPU%20Scheduler%20CI%2FCD/badge.svg)](https://github.com/Breezy1214/CPU-Scheduler/actions)
 [![License](https://img.shields.io/badge/license-Educational-blue.svg)](LICENSE)
 [![C++](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://isocpp.org/)
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-lightgrey.svg)](https://github.com/Breezy1214/CPU-Scheduler)
 
 An advanced CPU scheduling algorithm simulator developed in C++ for educational purposes. Implements multiple scheduling algorithms with comprehensive performance analysis, real-time visualization, and professional software engineering practices.
 
-## 🎯 Features
+## Features
 
 ### Supported Algorithms
 - **Round Robin (RR)** - Time-sliced preemptive scheduling
@@ -25,7 +24,7 @@ An advanced CPU scheduling algorithm simulator developed in C++ for educational 
 ✅ Performance benchmarking suite  
 ✅ Interactive and command-line interfaces  
 
-## 📊 Performance Metrics
+## Performance Metrics
 
 The simulator calculates and displays:
 - Average Waiting Time
@@ -35,7 +34,7 @@ The simulator calculates and displays:
 - Throughput (processes/time unit)
 - Context Switch Count and Overhead
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 ```bash
@@ -70,7 +69,7 @@ make build
 ./bin/scheduler -n 5 -a rr -q 8
 ```
 
-## 📖 Usage
+## Usage
 
 ### Interactive Mode
 
@@ -108,7 +107,7 @@ PID Priority BurstTime ArrivalTime
 3 3 8 2
 ```
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 CPU-Scheduler/
@@ -143,7 +142,7 @@ CPU-Scheduler/
 └── README.md
 ```
 
-## 🔧 Build System
+## Build System
 
 ### Makefile Targets
 
@@ -159,7 +158,7 @@ make format     # Format code with clang-format
 make lint       # Run static analysis
 ```
 
-## 🧪 Testing
+## Testing
 
 Comprehensive test suite:
 
@@ -177,13 +176,13 @@ make test
 - Performance benchmarks
 - Edge case validation
 
-## 📚 Documentation
+## Documentation
 
 - **[User Manual](doc/USER_MANUAL.md)** - Complete usage guide
 - **[Design Document](doc/DESIGN.md)** - Architecture and implementation details
 - **API Documentation** - Generate with `make docs`
 
-## 🎓 Educational Value
+## Educational Value
 
 This project demonstrates:
 - **Operating System Concepts**: Process scheduling, context switching, CPU utilization
@@ -192,15 +191,15 @@ This project demonstrates:
 - **Software Engineering**: OOP design patterns, modular architecture, testing
 - **Performance Analysis**: Metrics calculation, algorithm comparison
 
-## 👥 Team Members
+## Team Members
 
 This project is collaboratively developed by:
-- **Team Member 1** - Algorithm Implementation
+- **Chidiebube Nwabuike** - Algorithm Implementation
 - **Team Member 2** - Testing & Documentation
 - **Team Member 3** - Visualization & CI/CD
 
 
-## 📊 Performance Benchmarks
+## Performance Benchmarks
 
 Sample results from benchmark suite:
 
@@ -214,7 +213,7 @@ Sample results from benchmark suite:
 
 *Results with 10 processes, quantum=4, context switch time=1*
 
-## 🔬 Algorithms Explained
+## Algorithms Explained
 
 ### Round Robin
 Fair time-sharing algorithm where each process gets equal CPU time slices. Excellent for interactive systems.
@@ -228,16 +227,14 @@ Processes are assigned to fixed priority queues based on their type (system, int
 ### Multilevel Feedback Queue
 Processes dynamically move between queues based on behavior. CPU-bound processes move down, I/O-bound stay up.
 
-## 🐛 Known Issues & Limitations
+## Known Issues & Limitations
 
 - No actual I/O simulation (processes don't block)
 - Single-core simulation only
 - Discrete time units (not real-time microseconds)
 - No memory management simulation
 
-See [Issues](https://github.com/Breezy1214/CPU-Scheduler/issues) for the full list.
-
-## 🔮 Future Enhancements
+## Future Enhancements
 
 - [ ] Additional algorithms (SJF, SRTF, CFS)
 - [ ] Multi-core CPU simulation
@@ -247,7 +244,7 @@ See [Issues](https://github.com/Breezy1214/CPU-Scheduler/issues) for the full li
 - [ ] Machine learning for burst time prediction
 
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Course instructors for project requirements
 - Operating System textbooks (Silberschatz, Tanenbaum)
