@@ -16,26 +16,26 @@
  */
 void displayWelcomeBanner() {
     std::cout << "\n";
-    std::cout << "╔══════════════════════════════════════════════════════════════════════════╗\n";
-    std::cout << "║                                                                          ║\n";
-    std::cout << "║              CPU SCHEDULER SIMULATOR - VERSION 1.0                       ║\n";
-    std::cout << "║                                                                          ║\n";
-    std::cout << "║       Advanced CPU Scheduling Algorithm Simulation Environment          ║\n";
-    std::cout << "║                                                                          ║\n";
-    std::cout << "║  Supported Algorithms:                                                   ║\n";
-    std::cout << "║    • Round Robin (RR)                                                    ║\n";
-    std::cout << "║    • Priority Scheduling (Preemptive & Non-Preemptive)                   ║\n";
-    std::cout << "║    • Multilevel Queue (MLQ)                                              ║\n";
-    std::cout << "║    • Multilevel Feedback Queue (MLFQ)                                    ║\n";
-    std::cout << "║                                                                          ║\n";
-    std::cout << "║  Features:                                                               ║\n";
-    std::cout << "║    • Real-time visualization                                             ║\n";
-    std::cout << "║    • Performance metrics analysis                                        ║\n";
-    std::cout << "║    • Context switching simulation                                        ║\n";
-    std::cout << "║    • Starvation prevention (aging)                                       ║\n";
-    std::cout << "║    • Algorithm comparison                                                ║\n";
-    std::cout << "║                                                                          ║\n";
-    std::cout << "╚══════════════════════════════════════════════════════════════════════════╝\n";
+    std::cout << "+--------------------------------------------------------------------------+\n";
+    std::cout << "|                                                                          |\n";
+    std::cout << "|              CPU SCHEDULER SIMULATOR - VERSION 1.0                       |\n";
+    std::cout << "|                                                                          |\n";
+    std::cout << "|       Advanced CPU Scheduling Algorithm Simulation Environment          |\n";
+    std::cout << "|                                                                          |\n";
+    std::cout << "|  Supported Algorithms:                                                   |\n";
+    std::cout << "|    * Round Robin (RR)                                                    |\n";
+    std::cout << "|    * Priority Scheduling (Preemptive & Non-Preemptive)                   |\n";
+    std::cout << "|    * Multilevel Queue (MLQ)                                              |\n";
+    std::cout << "|    * Multilevel Feedback Queue (MLFQ)                                    |\n";
+    std::cout << "|                                                                          |\n";
+    std::cout << "|  Features:                                                               |\n";
+    std::cout << "|    * Real-time visualization                                             |\n";
+    std::cout << "|    * Performance metrics analysis                                        |\n";
+    std::cout << "|    * Context switching simulation                                        |\n";
+    std::cout << "|    * Starvation prevention (aging)                                       |\n";
+    std::cout << "|    * Algorithm comparison                                                |\n";
+    std::cout << "|                                                                          |\n";
+    std::cout << "+--------------------------------------------------------------------------+\n";
     std::cout << "\n";
 }
 
@@ -90,11 +90,11 @@ std::vector<Process> createSampleProcesses() {
  * @brief Quick demo mode
  */
 void runQuickDemo() {
-    std::cout << "\n╔══════════════════════════════════════════════════════════════╗\n";
-    std::cout << "║                    QUICK DEMO MODE                           ║\n";
-    std::cout << "╠══════════════════════════════════════════════════════════════╣\n";
-    std::cout << "║ Running comparison of all scheduling algorithms...           ║\n";
-    std::cout << "╚══════════════════════════════════════════════════════════════╝\n";
+    std::cout << "\n+--------------------------------------------------------------+\n";
+    std::cout << "|                    QUICK DEMO MODE                           |\n";
+    std::cout << "+--------------------------------------------------------------+\n";
+    std::cout << "| Running comparison of all scheduling algorithms...           |\n";
+    std::cout << "+--------------------------------------------------------------+\n";
     
     Simulator sim;
     sim.setProcesses(createSampleProcesses());
@@ -258,10 +258,10 @@ int main(int argc, char* argv[]) {
     }
     
     std::cout << "\n";
-    std::cout << "╔══════════════════════════════════════════════════════════════╗\n";
-    std::cout << "║                  Simulation Complete!                        ║\n";
-    std::cout << "║            Thank you for using CPU Scheduler!                ║\n";
-    std::cout << "╚══════════════════════════════════════════════════════════════╝\n";
+    std::cout << "+--------------------------------------------------------------+\n";
+    std::cout << "|                  Simulation Complete!                        |\n";
+    std::cout << "|            Thank you for using CPU Scheduler!                |\n";
+    std::cout << "+--------------------------------------------------------------+\n";
     std::cout << "\n";
     
     return 0;

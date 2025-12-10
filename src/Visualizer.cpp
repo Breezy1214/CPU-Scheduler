@@ -80,12 +80,12 @@ void Visualizer::displayGanttChart(const std::vector<ExecutionEvent>& timeline) 
         return;
     }
     
-    std::cout << "\n╔══════════════════════════════════════════════════════════════╗\n";
-    std::cout << "║                      GANTT CHART                             ║\n";
-    std::cout << "╠══════════════════════════════════════════════════════════════╣\n";
+    std::cout << "\n+--------------------------------------------------------------+\n";
+    std::cout << "|                      GANTT CHART                             |\n";
+    std::cout << "+--------------------------------------------------------------+\n";
     
     // Display process blocks
-    std::cout << "║ ";
+    std::cout << "| ";
     for (const auto& event : timeline) {
         if (event.processId == -1) {
             std::cout << "[IDLE]";
@@ -97,7 +97,7 @@ void Visualizer::displayGanttChart(const std::vector<ExecutionEvent>& timeline) 
     std::cout << "\n";
     
     // Display timeline
-    std::cout << "║ ";
+    std::cout << "| ";
     int currentPos = 0;
     for (const auto& event : timeline) {
         if (currentPos == 0) {
@@ -113,7 +113,7 @@ void Visualizer::displayGanttChart(const std::vector<ExecutionEvent>& timeline) 
     }
     std::cout << "\n";
     
-    std::cout << "╚══════════════════════════════════════════════════════════════╝\n";
+    std::cout << "+--------------------------------------------------------------+\n";
 }
 
 void Visualizer::displayCompactGanttChart(const std::vector<ExecutionEvent>& timeline,
@@ -143,41 +143,41 @@ void Visualizer::displayCompactGanttChart(const std::vector<ExecutionEvent>& tim
 }
 
 void Visualizer::displayReadyQueue(const std::vector<Process>& readyQueue) const {
-    std::cout << "\n╔══════════════════════════════════════════════════════════════╗\n";
-    std::cout << "║                    READY QUEUE STATUS                        ║\n";
-    std::cout << "╠══════════════════════════════════════════════════════════════╣\n";
+    std::cout << "\n+--------------------------------------------------------------+\n";
+    std::cout << "|                    READY QUEUE STATUS                        |\n";
+    std::cout << "+--------------------------------------------------------------+\n";
     
     if (readyQueue.empty()) {
-        std::cout << "║                    (Queue is empty)                          ║\n";
+        std::cout << "|                    (Queue is empty)                          |\n";
     } else {
-        std::cout << "║ Processes: ";
+        std::cout << "| Processes: ";
         for (const auto& p : readyQueue) {
             std::cout << getProcessColor(p.getPid()) 
                       << "P" << p.getPid() << RESET << " ";
         }
-        std::cout << std::setw(40) << "║\n";
+        std::cout << std::setw(40) << "|\n";
     }
     
-    std::cout << "╚══════════════════════════════════════════════════════════════╝\n";
+    std::cout << "+--------------------------------------------------------------+\n";
 }
 
 void Visualizer::displayCPUStatus(const Process* currentProcess, int currentTime) const {
-    std::cout << "\n┌────────────────────────────────────────┐\n";
-    std::cout << "│         CPU STATUS                     │\n";
-    std::cout << "├────────────────────────────────────────┤\n";
-    std::cout << "│ Time: " << std::setw(10) << currentTime << std::setw(22) << "│\n";
+    std::cout << "\n+----------------------------------------+\n";
+    std::cout << "|         CPU STATUS                     |\n";
+    std::cout << "+----------------------------------------+\n";
+    std::cout << "| Time: " << std::setw(10) << currentTime << std::setw(22) << "|\n";
     
     if (currentProcess) {
-        std::cout << "│ Running: " << getProcessColor(currentProcess->getPid())
+        std::cout << "| Running: " << getProcessColor(currentProcess->getPid())
                   << "P" << currentProcess->getPid() << RESET 
-                  << std::setw(26) << "│\n";
-        std::cout << "│ Remaining: " << std::setw(5) << currentProcess->getRemainingTime() 
-                  << std::setw(21) << "│\n";
+                  << std::setw(26) << "|\n";
+        std::cout << "| Remaining: " << std::setw(5) << currentProcess->getRemainingTime() 
+                  << std::setw(21) << "|\n";
     } else {
-        std::cout << "│ Running: IDLE" << std::setw(23) << "│\n";
+        std::cout << "| Running: IDLE" << std::setw(23) << "|\n";
     }
     
-    std::cout << "└────────────────────────────────────────┘\n";
+    std::cout << "+----------------------------------------+\n";
 }
 
 void Visualizer::displayCPUUtilization(double utilization) const {
@@ -187,16 +187,16 @@ void Visualizer::displayCPUUtilization(double utilization) const {
 }
 
 void Visualizer::displayProcessTable(const std::vector<Process>& processes) const {
-    std::cout << "\n╔═════╤══════════╤════════╤═══════════╤════════════╤═════════╗\n";
-    std::cout << "║ PID │ Priority │ Burst  │  Arrival  │   State    │ Queue   ║\n";
-    std::cout << "╠═════╪══════════╪════════╪═══════════╪════════════╪═════════╣\n";
+    std::cout << "\n+-----+----------+--------+-----------+------------+---------+\n";
+    std::cout << "| PID | Priority | Burst  |  Arrival  |   State    | Queue   |\n";
+    std::cout << "+-----+----------+--------+-----------+------------+---------+\n";
     
     for (const auto& p : processes) {
-        std::cout << "║ " << std::setw(3) << p.getPid() 
-                  << " │ " << std::setw(8) << p.getPriority()
-                  << " │ " << std::setw(6) << p.getBurstTime()
-                  << " │ " << std::setw(9) << p.getArrivalTime()
-                  << " │ ";
+        std::cout << "| " << std::setw(3) << p.getPid() 
+                  << " | " << std::setw(8) << p.getPriority()
+                  << " | " << std::setw(6) << p.getBurstTime()
+                  << " | " << std::setw(9) << p.getArrivalTime()
+                  << " | ";
         
         switch (p.getState()) {
             case ProcessState::NEW:
@@ -216,10 +216,10 @@ void Visualizer::displayProcessTable(const std::vector<Process>& processes) cons
                 break;
         }
         
-        std::cout << " │ " << std::setw(7) << p.getQueueLevel() << " ║\n";
+        std::cout << " | " << std::setw(7) << p.getQueueLevel() << " |\n";
     }
     
-    std::cout << "╚═════╧══════════╧════════╧═══════════╧════════════╧═════════╝\n";
+    std::cout << "+-----+----------+--------+-----------+------------+---------+\n";
 }
 
 void Visualizer::displayStateTransition(const Process& process,
@@ -244,59 +244,59 @@ void Visualizer::displayStateTransition(const Process& process,
 }
 
 void Visualizer::displayMetrics(const Metrics& metrics) const {
-    std::cout << "\n╔══════════════════════════════════════════════════════════════╗\n";
-    std::cout << "║               PERFORMANCE METRICS                            ║\n";
-    std::cout << "╠══════════════════════════════════════════════════════════════╣\n";
-    std::cout << "║ Processes:              " << std::setw(10) << metrics.getProcessCount() 
-              << "                        ║\n";
-    std::cout << "║ Total Execution Time:   " << std::setw(10) << metrics.getTotalExecutionTime() 
-              << " time units             ║\n";
-    std::cout << "╠══════════════════════════════════════════════════════════════╣\n";
-    std::cout << "║ Avg Waiting Time:       " << std::setw(10) << std::fixed 
+    std::cout << "\n+--------------------------------------------------------------+\n";
+    std::cout << "|               PERFORMANCE METRICS                            |\n";
+    std::cout << "+--------------------------------------------------------------+\n";
+    std::cout << "| Processes:              " << std::setw(10) << metrics.getProcessCount() 
+              << "                        |\n";
+    std::cout << "| Total Execution Time:   " << std::setw(10) << metrics.getTotalExecutionTime() 
+              << " time units             |\n";
+    std::cout << "+--------------------------------------------------------------+\n";
+    std::cout << "| Avg Waiting Time:       " << std::setw(10) << std::fixed 
               << std::setprecision(2) << metrics.getAvgWaitingTime() 
-              << " time units             ║\n";
-    std::cout << "║ Avg Turnaround Time:    " << std::setw(10) << std::fixed 
+              << " time units             |\n";
+    std::cout << "| Avg Turnaround Time:    " << std::setw(10) << std::fixed 
               << std::setprecision(2) << metrics.getAvgTurnaroundTime() 
-              << " time units             ║\n";
-    std::cout << "║ Avg Response Time:      " << std::setw(10) << std::fixed 
+              << " time units             |\n";
+    std::cout << "| Avg Response Time:      " << std::setw(10) << std::fixed 
               << std::setprecision(2) << metrics.getAvgResponseTime() 
-              << " time units             ║\n";
-    std::cout << "╠══════════════════════════════════════════════════════════════╣\n";
-    std::cout << "║ CPU Utilization:        " << std::setw(10) << std::fixed 
+              << " time units             |\n";
+    std::cout << "+--------------------------------------------------------------+\n";
+    std::cout << "| CPU Utilization:        " << std::setw(10) << std::fixed 
               << std::setprecision(2) << metrics.getCpuUtilization() 
-              << " %                      ║\n";
-    std::cout << "║ Throughput:             " << std::setw(10) << std::fixed 
+              << " %                      |\n";
+    std::cout << "| Throughput:             " << std::setw(10) << std::fixed 
               << std::setprecision(4) << metrics.getThroughput() 
-              << " proc/time             ║\n";
-    std::cout << "║ Context Switches:       " << std::setw(10) << metrics.getTotalContextSwitches() 
-              << "                        ║\n";
-    std::cout << "║ CS Overhead:            " << std::setw(10) << metrics.getContextSwitchOverhead() 
-              << " time units             ║\n";
-    std::cout << "╚══════════════════════════════════════════════════════════════╝\n";
+              << " proc/time             |\n";
+    std::cout << "| Context Switches:       " << std::setw(10) << metrics.getTotalContextSwitches() 
+              << "                        |\n";
+    std::cout << "| CS Overhead:            " << std::setw(10) << metrics.getContextSwitchOverhead() 
+              << " time units             |\n";
+    std::cout << "+--------------------------------------------------------------+\n";
 }
 
 void Visualizer::displayComparison(const std::vector<std::string>& schedulerNames,
                                    const std::vector<Metrics>& allMetrics) const {
-    std::cout << "\n╔══════════════════════════════════════════════════════════════════════════╗\n";
-    std::cout << "║                    SCHEDULER COMPARISON                                  ║\n";
-    std::cout << "╠══════════════════╤═══════╤═══════╤═══════╤══════╤══════╤═══════════════╣\n";
-    std::cout << "║ Algorithm        │  WT   │  TAT  │  RT   │ CPU% │  TP  │ Ctx Switches  ║\n";
-    std::cout << "╠══════════════════╪═══════╪═══════╪═══════╪══════╪══════╪═══════════════╣\n";
+    std::cout << "\n+--------------------------------------------------------------------------+\n";
+    std::cout << "|                    SCHEDULER COMPARISON                                  |\n";
+    std::cout << "+------------------+-------+-------+-------+------+------+---------------+\n";
+    std::cout << "| Algorithm        |  WT   |  TAT  |  RT   | CPU% |  TP  | Ctx Switches  |\n";
+    std::cout << "+------------------+-------+-------+-------+------+------+---------------+\n";
     
     for (size_t i = 0; i < schedulerNames.size() && i < allMetrics.size(); ++i) {
         const auto& m = allMetrics[i];
-        std::cout << "║ " << std::left << std::setw(16) << schedulerNames[i].substr(0, 16)
-                  << " │ " << std::right << std::setw(5) << std::fixed << std::setprecision(1) 
+        std::cout << "| " << std::left << std::setw(16) << schedulerNames[i].substr(0, 16)
+                  << " | " << std::right << std::setw(5) << std::fixed << std::setprecision(1) 
                   << m.getAvgWaitingTime()
-                  << " │ " << std::setw(5) << m.getAvgTurnaroundTime()
-                  << " │ " << std::setw(5) << m.getAvgResponseTime()
-                  << " │ " << std::setw(4) << std::setprecision(0) << m.getCpuUtilization()
-                  << " │ " << std::setw(4) << std::setprecision(2) << m.getThroughput()
-                  << " │ " << std::setw(13) << m.getTotalContextSwitches()
-                  << " ║\n";
+                  << " | " << std::setw(5) << m.getAvgTurnaroundTime()
+                  << " | " << std::setw(5) << m.getAvgResponseTime()
+                  << " | " << std::setw(4) << std::setprecision(0) << m.getCpuUtilization()
+                  << " | " << std::setw(4) << std::setprecision(2) << m.getThroughput()
+                  << " | " << std::setw(13) << m.getTotalContextSwitches()
+                  << " |\n";
     }
     
-    std::cout << "╚══════════════════╧═══════╧═══════╧═══════╧══════╧══════╧═══════════════╝\n";
+    std::cout << "+------------------+-------+-------+-------+------+------+---------------+\n";
     
     // Find best performers
     if (!allMetrics.empty()) {

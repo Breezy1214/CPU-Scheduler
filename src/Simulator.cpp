@@ -250,24 +250,24 @@ void Simulator::interactiveMenu() {
     int choice;
     
     while (true) {
-        std::cout << "\n╔══════════════════════════════════════════════════════════════╗\n";
-        std::cout << "║        CPU SCHEDULER SIMULATOR - INTERACTIVE MENU            ║\n";
-        std::cout << "╠══════════════════════════════════════════════════════════════╣\n";
-        std::cout << "║  1. Generate Random Processes                                ║\n";
-        std::cout << "║  2. Load Processes from File                                 ║\n";
-        std::cout << "║  3. Add Processes Manually                                   ║\n";
-        std::cout << "║  4. Display Current Processes                                ║\n";
-        std::cout << "║  5. Run Round Robin Scheduler                                ║\n";
-        std::cout << "║  6. Run Priority Scheduler (Preemptive)                      ║\n";
-        std::cout << "║  7. Run Priority Scheduler (Non-Preemptive)                  ║\n";
-        std::cout << "║  8. Run Multilevel Queue Scheduler                           ║\n";
-        std::cout << "║  9. Run Multilevel Feedback Queue Scheduler                  ║\n";
-        std::cout << "║ 10. Run All Schedulers (Comparison)                          ║\n";
-        std::cout << "║ 11. Configure Scheduler Parameters                           ║\n";
-        std::cout << "║ 12. Export Results to CSV                                    ║\n";
-        std::cout << "║ 13. Run Performance Benchmark                                ║\n";
-        std::cout << "║  0. Exit                                                     ║\n";
-        std::cout << "╚══════════════════════════════════════════════════════════════╝\n";
+        std::cout << "\n+--------------------------------------------------------------+\n";
+        std::cout << "|        CPU SCHEDULER SIMULATOR - INTERACTIVE MENU            |\n";
+        std::cout << "+--------------------------------------------------------------+\n";
+        std::cout << "|  1. Generate Random Processes                                |\n";
+        std::cout << "|  2. Load Processes from File                                 |\n";
+        std::cout << "|  3. Add Processes Manually                                   |\n";
+        std::cout << "|  4. Display Current Processes                                |\n";
+        std::cout << "|  5. Run Round Robin Scheduler                                |\n";
+        std::cout << "|  6. Run Priority Scheduler (Preemptive)                      |\n";
+        std::cout << "|  7. Run Priority Scheduler (Non-Preemptive)                  |\n";
+        std::cout << "|  8. Run Multilevel Queue Scheduler                           |\n";
+        std::cout << "|  9. Run Multilevel Feedback Queue Scheduler                  |\n";
+        std::cout << "| 10. Run All Schedulers (Comparison)                          |\n";
+        std::cout << "| 11. Configure Scheduler Parameters                           |\n";
+        std::cout << "| 12. Export Results to CSV                                    |\n";
+        std::cout << "| 13. Run Performance Benchmark                                |\n";
+        std::cout << "|  0. Exit                                                     |\n";
+        std::cout << "+--------------------------------------------------------------+\n";
         std::cout << "Enter choice: ";
         
         std::cin >> choice;
