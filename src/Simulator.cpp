@@ -12,6 +12,7 @@
 #include <thread>
 #include <algorithm>
 #include <random>
+#include <iomanip>
 
 Simulator::Simulator()
     : rng(std::random_device{}())
@@ -378,6 +379,12 @@ void Simulator::runBenchmark(int iterations) {
             end - start).count();
         
         std::cout << "Completed in " << duration << " ms\n";
+    }
+}
+
+void Simulator::setColorMode(bool useColor) {
+    if (visualizer) {
+        visualizer->setColorEnabled(useColor);
     }
 }
 

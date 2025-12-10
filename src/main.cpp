@@ -10,6 +10,7 @@
 #include <vector>
 #include <string>
 #include <cstdlib>
+#include <iomanip>
 
 /**
  * @brief Display welcome banner
@@ -113,6 +114,7 @@ int main(int argc, char* argv[]) {
     
     bool interactiveMode = true;
     bool benchmarkMode = false;
+    bool useColor = true;
     std::string inputFile;
     std::string outputFile;
     std::string algorithm;
@@ -167,7 +169,7 @@ int main(int argc, char* argv[]) {
             }
         }
         else if (arg == "--no-color") {
-            // Color will be handled by visualizer
+            useColor = false;
         }
         else if (arg == "--no-gantt") {
             simConfig.showGanttChart = false;
@@ -181,6 +183,7 @@ int main(int argc, char* argv[]) {
     // Create simulator
     Simulator simulator;
     simulator.initialize(simConfig, schedConfig);
+    simulator.setColorMode(useColor);
     
     // Run in appropriate mode
     if (interactiveMode) {

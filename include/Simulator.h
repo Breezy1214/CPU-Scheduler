@@ -179,6 +179,12 @@ public:
     void setSchedulerConfig(const SchedulerConfig& config) { schedConfig = config; }
 
     /**
+     * @brief Set color mode for visualization
+     * @param useColor Enable/disable color output
+     */
+    void setColorMode(bool useColor);
+
+    /**
      * @brief Get list of scheduler names
      * @return Vector of names
      */
