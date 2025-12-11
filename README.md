@@ -194,7 +194,7 @@ This project demonstrates:
 ## Team Members
 
 This project is collaboratively developed by:
-- **Chidiebube Nwabuike** - Algorithm Implementation
+- **Chidiebube Nwabuike and De'Ja Smith** - Algorithm Implementation
 - **Raven Goings** - Testing & Documentation
 - **Shelsie Roberts** - Visualization & CI/CD
 
