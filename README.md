@@ -196,7 +196,8 @@ This project demonstrates:
 This project is collaboratively developed by:
 - **Chidiebube Nwabuike** - Algorithm Implementation
 - **Raven Goings** - Testing & Documentation
-- **Team Member 3** - Visualization & CI/CD
+- **Shelsie Roberts** - Visualization & CI/CD
+
 
 
 ## Performance Benchmarks
