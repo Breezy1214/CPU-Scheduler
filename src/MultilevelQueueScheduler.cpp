@@ -177,7 +177,7 @@ void MultilevelQueueScheduler::run() {
         for (size_t i = 0; i < processes.size(); ++i) {
             Process& p = processes[i];
             if (p.getState() == ProcessState::NEW && 
-                p.getArrivalTime() == currentTime) {
+                p.getArrivalTime() <= currentTime) {
                 p.setState(ProcessState::READY);
                 int queueIdx = p.getQueueLevel();
                 queues[queueIdx].push_back(static_cast<int>(i));

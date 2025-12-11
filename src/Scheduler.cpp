@@ -21,6 +21,10 @@ void Scheduler::addProcess(const Process& process) {
     processes.push_back(process);
 }
 
+void Scheduler::clearProcesses() {
+    processes.clear();
+}
+
 void Scheduler::addProcesses(const std::vector<Process>& procs) {
     for (const auto& p : procs) {
         addProcess(p);

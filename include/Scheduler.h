@@ -143,6 +143,11 @@ public:
     virtual void reset();
 
     /**
+     * @brief Clear all processes from the scheduler
+     */
+    virtual void clearProcesses();
+
+    /**
      * @brief Calculate performance metrics
      */
     virtual void calculateMetrics();

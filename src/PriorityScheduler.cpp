@@ -76,15 +76,14 @@ void PriorityScheduler::run() {
     currentTime = 0;
     int currentProcessIdx = -1;
     timeline.clear();
+    contextSwitches = 0;
     
-    // Set all processes to READY state
+    // Reset all processes first, then set initial states
     for (auto& p : processes) {
+        p.reset();
         if (p.getArrivalTime() == 0) {
             p.setState(ProcessState::READY);
-        } else {
-            p.setState(ProcessState::NEW);
         }
-        p.reset();
     }
     
     int completedProcesses = 0;
@@ -94,7 +93,7 @@ void PriorityScheduler::run() {
         // Handle new arrivals
         for (auto& p : processes) {
             if (p.getState() == ProcessState::NEW && 
-                p.getArrivalTime() == currentTime) {
+                p.getArrivalTime() <= currentTime) {
                 p.setState(ProcessState::READY);
                 
                 // Check for preemption

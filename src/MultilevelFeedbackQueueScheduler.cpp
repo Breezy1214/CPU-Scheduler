@@ -147,7 +147,7 @@ void MultilevelFeedbackQueueScheduler::run() {
         for (size_t i = 0; i < processes.size(); ++i) {
             Process& p = processes[i];
             if (p.getState() == ProcessState::NEW && 
-                p.getArrivalTime() == currentTime) {
+                p.getArrivalTime() <= currentTime) {
                 p.setState(ProcessState::READY);
                 p.setQueueLevel(0);
                 processQueueMap[p.getPid()] = 0;

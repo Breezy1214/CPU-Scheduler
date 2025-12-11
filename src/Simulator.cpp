@@ -161,7 +161,8 @@ void Simulator::runAll() {
         std::cout << "\n";
         visualizer->displayHeader(scheduler->getName());
         
-        // Reset scheduler and add processes
+        // Clear and reset scheduler, then add fresh processes
+        scheduler->clearProcesses();
         scheduler->reset();
         for (const auto& p : baseProcesses) {
             scheduler->addProcess(p);

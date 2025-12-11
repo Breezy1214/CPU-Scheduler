@@ -28,8 +28,20 @@ void RoundRobinScheduler::run() {
         return;
     }
     
-    reset();
+    // Initialize runtime state
+    currentTime = 0;
+    contextSwitches = 0;
+    timeline.clear();
+    readyQueue.clear();
+    while (!processQueue.empty()) {
+        processQueue.pop();
+    }
     isRunning = true;
+    
+    // Reset all processes to initial state
+    for (auto& p : processes) {
+        p.reset();
+    }
     
     // Sort processes by arrival time
     std::sort(processes.begin(), processes.end(),
