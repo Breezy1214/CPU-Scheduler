@@ -15,14 +15,14 @@ An advanced CPU scheduling algorithm simulator developed in C++ for educational 
 - **Multilevel Feedback Queue (MLFQ)** - Dynamic queue adjustment based on process behavior
 
 ### Key Capabilities
-✅ Real-time process execution visualization  
-✅ Comprehensive performance metrics calculation  
-✅ Context switching simulation with overhead  
-✅ Starvation prevention through aging mechanisms  
-✅ Side-by-side algorithm comparison  
-✅ Process import/export (CSV format)  
-✅ Performance benchmarking suite  
-✅ Interactive and command-line interfaces  
+ Real-time process execution visualization  
+ Comprehensive performance metrics calculation  
+ Context switching simulation with overhead  
+ Starvation prevention through aging mechanisms  
+ Side-by-side algorithm comparison  
+ Process import/export (CSV format)  
+ Performance benchmarking suite  
+ Interactive and command-line interfaces  
 
 ## Performance Metrics
 

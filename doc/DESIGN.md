@@ -168,13 +168,6 @@ double getWaitingTimeVariance() const;             // Statistical variance
 
 **Responsibility**: Orchestrate simulation execution, manage multiple schedulers, handle I/O.
 
-**Key Features**:
-- Multi-scheduler management
-- Process generation (random or from file)
-- Result collection and comparison
-- CSV export functionality
-- Interactive menu system
-- Benchmark execution
 
 ### 3.5 Visualizer Class
 

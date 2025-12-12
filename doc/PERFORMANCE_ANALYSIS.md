@@ -144,44 +144,44 @@ We tested with five distinct workload profiles:
 ### 3.1 Algorithm Strengths
 
 **Round Robin:**
-- ✅ Guaranteed fairness
-- ✅ No starvation
-- ✅ Simple implementation
-- ✅ Predictable behavior
-- ❌ High context switch overhead
-- ❌ Poor for varying burst times
+-  Guaranteed fairness
+-  No starvation
+-  Simple implementation
+-  Predictable behavior
+-  High context switch overhead
+-  Poor for varying burst times
 
 **Priority Preemptive:**
-- ✅ Excellent for real-time systems
-- ✅ Low response time
-- ✅ Flexible priority assignment
-- ✅ Good CPU utilization
-- ❌ Risk of starvation (mitigated by aging)
-- ❌ Priority inversion possible
+-  Excellent for real-time systems
+-  Low response time
+-  Flexible priority assignment
+-  Good CPU utilization
+-  Risk of starvation (mitigated by aging)
+-  Priority inversion possible
 
 **Priority Non-Preemptive:**
-- ✅ Low context switch overhead
-- ✅ Simple implementation
-- ✅ Good for batch processing
-- ❌ Poor response time
-- ❌ Convoy effect
-- ❌ Not suitable for interactive systems
+-  Low context switch overhead
+-  Simple implementation
+-  Good for batch processing
+-  Poor response time
+-  Convoy effect
+-  Not suitable for interactive systems
 
 **Multilevel Queue:**
-- ✅ Clear separation of process types
-- ✅ Optimized per-queue scheduling
-- ✅ Good for heterogeneous workloads
-- ❌ Fixed queue assignment
-- ❌ Possible queue starvation
-- ❌ Requires careful configuration
+-  Clear separation of process types
+-  Optimized per-queue scheduling
+-  Good for heterogeneous workloads
+-  Fixed queue assignment
+-  Possible queue starvation
+-  Requires careful configuration
 
 **Multilevel Feedback Queue:**
-- ✅ Adapts to process behavior
-- ✅ No prior knowledge needed
-- ✅ Favors I/O-bound processes
-- ✅ Prevents starvation with aging
-- ❌ Complex implementation
-- ❌ Higher scheduling overhead
+-  Adapts to process behavior
+-  No prior knowledge needed
+-  Favors I/O-bound processes
+-  Prevents starvation with aging
+-  Complex implementation
+-  Higher scheduling overhead
 
 ### 3.2 Time Quantum Impact (Round Robin)
 
