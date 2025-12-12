@@ -1,65 +1,32 @@
 # CPU Scheduler Simulator
 
-[![License](https://img.shields.io/badge/license-Educational-blue.svg)](LICENSE)
-[![C++](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://isocpp.org/)
-[![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-lightgrey.svg)](https://github.com/Breezy1214/CPU-Scheduler)
-
-An advanced CPU scheduling algorithm simulator developed in C++ for educational purposes. Implements multiple scheduling algorithms with comprehensive performance analysis, real-time visualization, and professional software engineering practices.
+A C++ application for simulating CPU scheduling algorithms. Implements Round Robin, Priority Scheduling, Multilevel Queue, and Multilevel Feedback Queue with performance analysis.
 
 ## Features
 
-### Supported Algorithms
-- **Round Robin (RR)** - Time-sliced preemptive scheduling
-- **Priority Scheduling** - Both preemptive and non-preemptive modes
-- **Multilevel Queue (MLQ)** - Fixed priority queues for different process types
-- **Multilevel Feedback Queue (MLFQ)** - Dynamic queue adjustment based on process behavior
-
-### Key Capabilities
- Real-time process execution visualization  
- Comprehensive performance metrics calculation  
- Context switching simulation with overhead  
- Starvation prevention through aging mechanisms  
- Side-by-side algorithm comparison  
- Process import/export (CSV format)  
- Performance benchmarking suite  
- Interactive and command-line interfaces  
-
-## Performance Metrics
-
-The simulator calculates and displays:
-- Average Waiting Time
-- Average Turnaround Time
-- Average Response Time
-- CPU Utilization
-- Throughput (processes/time unit)
-- Context Switch Count and Overhead
+- Multiple scheduling algorithms
+- Performance metrics calculation
+- Real-time visualization
+- Context switching simulation
+- Process import/export
 
 ## Quick Start
 
 ### Prerequisites
-```bash
-- C++17 compatible compiler (g++ 7.0+, clang++ 5.0+)
+
+- C++17 compiler
 - GNU Make
-```
 
-### Building
+### Build
 
 ```bash
-# Clone the repository
-git clone https://github.com/Breezy1214/CPU-Scheduler.git
-cd CPU-Scheduler
-
-# Build the project
 make build
-
-# Run the simulator
 ./bin/scheduler
 ```
 
-### Quick Demo
+### Demo
 
 ```bash
-# Run a quick demonstration
 ./bin/scheduler --demo
 
 # Compare all algorithms with 10 random processes
@@ -73,123 +40,36 @@ make build
 
 ### Interactive Mode
 
-Launch without arguments for an interactive menu:
 ```bash
 ./bin/scheduler
 ```
 
-### Command-Line Mode
+### Command-Line
 
 ```bash
-# Generate processes and run specific algorithm
-./bin/scheduler -n <count> -a <algorithm> [options]
-
-# Load processes from file
-./bin/scheduler -f processes.txt -a all
-
-# Run benchmark
-./bin/scheduler -b -o results.csv
+./bin/scheduler -n <count> -a <algorithm>
 ```
 
-### Algorithm Options
-- `rr` - Round Robin
-- `pp` - Priority Preemptive
-- `pnp` - Priority Non-Preemptive
-- `mlq` - Multilevel Queue
-- `mlfq` - Multilevel Feedback Queue
-- `all` - Run all and compare
-
-### Example Process File Format
-```
-PID Priority BurstTime ArrivalTime
-1 2 10 0
-2 1 5 1
-3 3 8 2
-```
+Algorithms: rr, pp, pnp, mlq, mlfq, all
 
 ## Project Structure
 
-```
+```text
 CPU-Scheduler/
-├── src/              # Source files (.cpp)
-│   ├── main.cpp
-│   ├── Scheduler.cpp
-│   ├── RoundRobinScheduler.cpp
-│   ├── PriorityScheduler.cpp
-│   ├── MultilevelQueueScheduler.cpp
-│   ├── MultilevelFeedbackQueueScheduler.cpp
-│   ├── Process.cpp
-│   ├── Metrics.cpp
-│   ├── Simulator.cpp
-│   └── Visualizer.cpp
-├── include/          # Header files (.h)
-│   ├── Scheduler.h
-│   ├── Process.h
-│   ├── Metrics.h
-│   └── ...
-├── test/             # Unit tests
-│   ├── test_process.cpp
-│   ├── test_schedulers.cpp
-│   └── test_main.cpp
+├── src/              # Source files
+├── include/          # Headers
+├── test/             # Tests
 ├── doc/              # Documentation
-│   ├── USER_MANUAL.md
-│   ├── DESIGN.md
-│   └── API/
-├── scripts/          # Build and utility scripts
-├── bin/              # Compiled executables
-├── build/            # Object files
-├── Makefile          # Build system
-└── README.md
+├── scripts/          # Build scripts
+├── bin/              # Executables
+└── Makefile
 ```
 
-## Build System
+## Build Targets
 
-### Makefile Targets
-
-```bash
-make build      # Build optimized release version
-make debug      # Build with debug symbols
-make test       # Build and run unit tests
-make clean      # Remove build artifacts
-make install    # Install to ~/bin
-make docs       # Generate API documentation
-make benchmark  # Run performance benchmark
-make format     # Format code with clang-format
-make lint       # Run static analysis
-```
-
-## Testing
-
-Comprehensive test suite:
-
-```bash
-# Run all tests
-make test
-
-# Or run the test executable directly
-./bin/test_runner
-```
-
-### Test Coverage
-- Unit tests for all core components
-- Integration tests for algorithm correctness
-- Performance benchmarks
-- Edge case validation
-
-## Documentation
-
-- **[User Manual](doc/USER_MANUAL.md)** - Complete usage guide
-- **[Design Document](doc/DESIGN.md)** - Architecture and implementation details
-- **API Documentation** - Generate with `make docs`
-
-## Educational Value
-
-This project demonstrates:
-- **Operating System Concepts**: Process scheduling, context switching, CPU utilization
-- **Data Structures**: Queues, priority queues, process control blocks
-- **Algorithm Design**: Time complexity analysis, optimization strategies
-- **Software Engineering**: OOP design patterns, modular architecture, testing
-- **Performance Analysis**: Metrics calculation, algorithm comparison
+- `make build` - Release build
+- `make test` - Run tests
+- `make clean` - Clean build files
 
 ## Team Members
 
@@ -235,21 +115,9 @@ Processes dynamically move between queues based on behavior. CPU-bound processes
 - Discrete time units (not real-time microseconds)
 - No memory management simulation
 
-## Future Enhancements
 
-- [ ] Additional algorithms (SJF, SRTF, CFS)
-- [ ] Multi-core CPU simulation
-- [ ] I/O operations and blocking
-- [ ] GUI interface
-- [ ] Real-time process creation
-- [ ] Machine learning for burst time prediction
+## Documentation
 
-
-## Acknowledgments
-
-- Course instructors for project requirements
-- Operating System textbooks (Silberschatz, Tanenbaum)
-- Open-source community for tools and libraries
-
-
----
+- [Design Document](doc/DESIGN.md)
+- [User Manual](doc/USER_MANUAL.md)
+- [Performance Analysis](doc/PERFORMANCE_ANALYSIS.md)

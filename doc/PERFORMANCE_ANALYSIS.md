@@ -1,59 +1,24 @@
 # CPU Scheduler Simulator - Performance Analysis Report
 
-
----
-
 ## Executive Summary
 
-This document presents a comprehensive performance analysis of five CPU scheduling algorithms implemented in the CPU Scheduler Simulator. The analysis includes empirical benchmarks, comparative metrics, and recommendations for different workload scenarios.
+This document presents performance analysis of five CPU scheduling algorithms. The analysis includes benchmarks and comparative metrics.
 
----
+## Test Methodology
 
-## 1. Test Methodology
+### Environment
 
-### 1.1 Test Environment
+- Platform: Linux/Windows/macOS
+- Compiler: g++ with -O3
+- Test Iterations: 100 runs per configuration
 
-- **Platform:** Ubuntu 22.04 LTS / Windows 11 / macOS 14
-- **Compiler:** g++ 11.4.0 with -O3 optimization
-- **CPU:** Intel Core i7 / AMD Ryzen 7 / Apple M2
-- **Memory:** 16GB RAM
-- **Test Iterations:** 100 runs per configuration
+### Workloads
 
-### 1.2 Workload Characteristics
-
-We tested with five distinct workload profiles:
-
-#### Workload A: CPU-Bound Processes
-- 10 processes
-- Burst time: 15-30 time units
-- Arrival time: 0-5 time units
-- Priority: Uniformly distributed (0-10)
-
-#### Workload B: I/O-Bound Processes
-- 20 processes
-- Burst time: 3-10 time units
-- Arrival time: 0-10 time units
-- Priority: Uniformly distributed (0-10)
-
-#### Workload C: Mixed Workload
-- 15 processes
-- Burst time: 5-25 time units (mixed distribution)
-- Arrival time: 0-8 time units
-- Priority: Bimodal distribution (high and low)
-
-#### Workload D: Real-Time Simulation
-- 12 processes
-- Burst time: 10-20 time units
-- Arrival time: Poisson distribution (λ=2)
-- Priority: Deadline-based (0-5 for urgent)
-
-#### Workload E: Stress Test
-- 100 processes
-- Burst time: 1-50 time units
-- Arrival time: 0-20 time units
-- Priority: Random (0-10)
-
----
+- Workload A: CPU-Bound (10 processes)
+- Workload B: I/O-Bound (20 processes)
+- Workload C: Mixed (15 processes)
+- Workload D: Real-Time (12 processes)
+- Workload E: Stress Test (100 processes)
 
 ## 2. Performance Metrics
 
@@ -67,12 +32,6 @@ We tested with five distinct workload profiles:
 | Multilevel Queue | 41.5 | 62.0 | 10.2 | 95.8 | 0.161 | 28 |
 | MLFQ | 40.1 | 60.6 | 9.5 | 96.0 | 0.165 | 32 |
 
-**Analysis:**
-- Priority Preemptive shows best overall performance for CPU-bound workloads
-- MLFQ adapts well, achieving near-optimal turnaround time
-- Round Robin has highest context switches but maintains good response time
-- Non-preemptive priority suffers from convoy effect
-
 ### 2.2 Workload B Results (I/O-Bound)
 
 | Algorithm | Avg Wait (tu) | Avg TAT (tu) | Avg Response (tu) | CPU Util (%) | Throughput | Context Switches |
@@ -82,12 +41,6 @@ We tested with five distinct workload profiles:
 | Priority (Non-Preemptive) | 22.1 | 28.4 | 5.1 | 95.2 | 0.704 | 19 |
 | Multilevel Queue | 17.8 | 24.1 | 3.5 | 96.9 | 0.829 | 64 |
 | MLFQ | 15.9 | 22.2 | 2.5 | 97.8 | 0.901 | 68 |
-
-**Analysis:**
-- MLFQ excels with I/O-bound processes (keeps them in high-priority queues)
-- All preemptive algorithms show excellent response times
-- Higher context switches acceptable given short burst times
-- CPU utilization improves due to less idle time
 
 ### 2.3 Workload C Results (Mixed)
 
@@ -99,12 +52,6 @@ We tested with five distinct workload profiles:
 | Multilevel Queue | 29.7 | 44.3 | 7.1 | 96.1 | 0.339 | 48 |
 | MLFQ | 27.9 | 42.5 | 6.2 | 96.8 | 0.353 | 51 |
 
-**Analysis:**
-- MLFQ demonstrates superior adaptability to mixed workloads
-- Self-adjusting behavior optimizes for both CPU and I/O-bound processes
-- Priority scheduling effective but requires careful priority assignment
-- Round Robin provides consistent but not optimal performance
-
 ### 2.4 Workload D Results (Real-Time)
 
 | Algorithm | Avg Wait (tu) | Avg TAT (tu) | Avg Response (tu) | CPU Util (%) | Throughput | Context Switches |
@@ -115,12 +62,6 @@ We tested with five distinct workload profiles:
 | Multilevel Queue | 28.6 | 44.0 | 5.8 | 96.5 | 0.273 | 38 |
 | MLFQ | 31.2 | 46.6 | 6.5 | 96.0 | 0.257 | 42 |
 
-**Analysis:**
-- Priority Preemptive ideal for real-time deadlines
-- Low response time critical for time-sensitive tasks
-- MLFQ less suitable due to priority changes
-- Predictable behavior more important than raw performance
-
 ### 2.5 Workload E Results (Stress Test - 100 Processes)
 
 | Algorithm | Avg Wait (tu) | Avg TAT (tu) | Avg Response (tu) | CPU Util (%) | Throughput | Context Switches |
@@ -130,12 +71,6 @@ We tested with five distinct workload profiles:
 | Priority (Non-Preemptive) | 385.2 | 410.9 | 198.6 | 91.2 | 0.243 | 99 |
 | Multilevel Queue | 306.4 | 332.1 | 148.9 | 93.2 | 0.301 | 786 |
 | MLFQ | 295.1 | 320.8 | 138.7 | 94.1 | 0.312 | 812 |
-
-**Analysis:**
-- MLFQ scales best to large workloads
-- Context switch overhead becomes significant
-- Non-preemptive shows poor scalability
-- CPU utilization drops due to increased scheduling complexity
 
 ---
 

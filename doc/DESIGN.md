@@ -1,7 +1,5 @@
 # CPU Scheduler Simulator - Design Document
 
----
-
 ## Table of Contents
 
 1. [Executive Summary](#executive-summary)
@@ -10,32 +8,18 @@
 4. [Scheduling Algorithms](#scheduling-algorithms)
 5. [Performance Analysis](#performance-analysis)
 6. [Implementation Details](#implementation-details)
-7. [Testing Strategy](#testing-strategy)
-8. [Future Enhancements](#future-enhancements)
-
----
 
 ## 1. Executive Summary
 
-### Project Overview
+The CPU Scheduler Simulator is a C++ application for simulating CPU scheduling algorithms. It provides educational insights into process management.
 
-The CPU Scheduler Simulator is a comprehensive C++ application designed to simulate and compare various CPU scheduling algorithms. It provides educational insights into operating system process management through realistic simulation, detailed metrics, and visual representations.
+Objectives:
+- Implement standard CPU scheduling algorithms
+- Calculate performance metrics
+- Simulate context switching
+- Prevent starvation
 
-### Objectives
-
-1. Implement industry-standard CPU scheduling algorithms
-2. Provide accurate performance metrics for algorithm comparison
-3. Simulate realistic operating system behavior including context switching
-4. Prevent starvation through aging mechanisms
-5. Offer both interactive and programmatic interfaces
-
-### Technology Stack
-
-- **Language**: C++17
-- **Build System**: GNU Make
-- **Testing Framework**: Custom test framework
-- **Documentation**: Doxygen, Markdown
-- **Version Control**: Git
+Technology: C++17, GNU Make, custom testing.
 
 ---
 
@@ -44,226 +28,72 @@ The CPU Scheduler Simulator is a comprehensive C++ application designed to simul
 ### High-Level Architecture
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    Main Application                      │
-│                     (main.cpp)                           │
-└───────────────────┬─────────────────────────────────────┘
-                    │
-        ┌───────────┴───────────┐
-        │                       │
-   ┌────▼─────┐         ┌──────▼──────┐
-   │Simulator │         │ Visualizer  │
-   │          │◄────────┤             │
-   └────┬─────┘         └─────────────┘
-        │
-   ┌────▼──────────────────────────────┐
-   │      Scheduler (Abstract Base)     │
-   └────┬──────────────────────────────┘
-        │
-   ┌────┴──────────────┬──────────────┬──────────────┬─────────────┐
-   │                   │              │              │             │
-┌──▼──┐         ┌─────▼────┐  ┌─────▼────┐  ┌──────▼────┐ ┌────▼─────┐
-│ RR  │         │Priority  │  │   MLQ    │  │   MLFQ    │ │Process   │
-└─────┘         └──────────┘  └──────────┘  └───────────┘ └──────────┘
-                                                            │Metrics   │
-                                                            └──────────┘
+Main Application → Simulator → Schedulers → Metrics
 ```
 
-### Component Interaction Flow
+### Component Interaction
 
-1. **User Input** → Main Application
-2. **Main** → Simulator (configuration)
-3. **Simulator** → Scheduler instances (process distribution)
-4. **Schedulers** → Process execution simulation
-5. **Schedulers** → Metrics calculation
-6. **Visualizer** → Results display
-7. **Simulator** → Results export (optional)
+1. User input to Main
+2. Main configures Simulator
+3. Simulator distributes processes to Schedulers
+4. Schedulers simulate execution
+5. Metrics calculated and displayed
 
 ### Design Patterns
 
-**1. Template Method Pattern**
-- `Scheduler` base class defines algorithm skeleton
-- Derived classes implement specific `run()` behavior
-
-**2. Strategy Pattern**
-- Different scheduling algorithms as interchangeable strategies
-- Simulator can switch between algorithms dynamically
-
-**3. Observer Pattern** (implicit)
-- Visualizer observes scheduler state for real-time display
-
-**4. Factory Pattern** (in Simulator)
-- `addScheduler(SchedulerType)` creates appropriate scheduler instances
+- Template Method: Scheduler base class
+- Strategy: Interchangeable algorithms
+- Factory: Scheduler creation
 
 ---
 
 ## 3. Core Components
 
-### 3.1 Process Class
+### Process Class
 
-**Responsibility**: Represent a single process with all associated state and metrics.
+Represents a process with attributes: pid, priority, burstTime, remainingTime, arrivalTime, waitingTime, turnaroundTime, responseTime, state, queueLevel.
 
-**Key Attributes**:
-```cpp
-- pid: Process ID
-- priority: Priority level (0-10, lower = higher priority)
-- burstTime: Total CPU time required
-- remainingTime: CPU time still needed
-- arrivalTime: Time when process enters system
-- waitingTime: Total time spent waiting
-- turnaroundTime: Total time from arrival to completion
-- responseTime: Time to first execution
-- state: Current process state (NEW, READY, RUNNING, WAITING, TERMINATED)
-- queueLevel: Current queue in multilevel systems
-```
+Operations: execute, setState, incrementWaitingTime, resetExecution.
 
-**Key Operations**:
-- `execute(int time)`: Simulate CPU execution
-- `setState(ProcessState)`: Update process state
-- `incrementWaitingTime(int)`: Track waiting duration
-- `resetExecution()`: Reset for re-simulation
+### Scheduler Base Class
 
-### 3.2 Scheduler Base Class
+Interface for algorithms: run(), getNextProcess(), getName(), addProcess(), calculateMetrics().
 
-**Responsibility**: Define common interface and functionality for all scheduling algorithms.
+### Metrics Class
 
-**Key Methods**:
-```cpp
-virtual void run() = 0;                    // Execute scheduling algorithm
-virtual Process* getNextProcess();         // Select next process
-virtual std::string getName() const = 0;   // Algorithm name
-void addProcess(const Process&);           // Add process to scheduler
-void calculateMetrics();                   // Compute performance metrics
-const Metrics& getMetrics() const;         // Get results
-```
+Calculates: average waiting time, turnaround time, response time, CPU utilization, throughput, context switches.
 
-**Common Functionality**:
-- Process list management
-- Timeline event recording
-- Context switch simulation
-- Metrics calculation
+### Simulator Class
 
-### 3.3 Metrics Class
+Manages simulations, handles I/O.
 
-**Responsibility**: Calculate and store performance statistics.
+### Visualizer Class
 
-**Tracked Metrics**:
-- Average Waiting Time
-- Average Turnaround Time
-- Average Response Time
-- CPU Utilization
-- Throughput
-- Context Switch Count
-- Context Switch Overhead
-
-**Calculation Methods**:
-```cpp
-void calculateAverages();                          // Compute averages
-void calculateUtilization(int total, int idle);    // CPU efficiency
-void calculateThroughput(int totalTime);           // Processes/time
-double getWaitingTimeVariance() const;             // Statistical variance
-```
-
-### 3.4 Simulator Class
-
-**Responsibility**: Orchestrate simulation execution, manage multiple schedulers, handle I/O.
-
-
-### 3.5 Visualizer Class
-
-**Responsibility**: Provide text-based visual representations of simulation results.
-
-**Visualization Types**:
-- Gantt charts (timeline of execution)
-- Process state tables
-- Ready queue status
-- CPU utilization bars
-- Comparison tables
-- Real-time simulation frames
-
-**Features**:
-- ANSI color support
-- Configurable output width
-- Animation capabilities
-- Responsive formatting
+Text-based output: Gantt charts, tables, utilization bars.
 
 ---
 
 ## 4. Scheduling Algorithms
 
-### 4.1 Round Robin (RR)
+### Round Robin
 
-**Algorithm Description**:
-```
-1. Initialize circular queue with all ready processes
-2. While processes remain:
-   a. Dequeue next process
-   b. Execute for min(quantum, remaining_time)
-   c. If process not complete, enqueue at back
-   d. Handle new arrivals
-   e. Perform context switch
-3. Calculate metrics
-```
+Time-sliced preemptive scheduling. Quantum default 4.
 
-**Time Complexity**: O(n) per time unit, where n = number of processes  
-**Space Complexity**: O(n) for process queue
+Advantages: Fair, no starvation.
+Disadvantages: High overhead with small quantum.
 
-**Key Implementation Details**:
-- Circular queue maintains FIFO order
-- Quantum configurable (default: 4 time units)
-- New arrivals added to queue end
-- Context switches occur between different processes
+### Priority Scheduling
 
-**Advantages**:
-- Fair CPU distribution
-- No starvation
-- Good for time-sharing systems
+Preemptive and non-preemptive modes. Aging prevents starvation.
 
-**Disadvantages**:
-- High context switch overhead with small quantum
-- Poor performance for processes with short burst times
+### Multilevel Queue
 
-### 4.2 Priority Scheduling
+Fixed queues: System (0-2), Interactive (3-5), Batch (6+).
+Each queue different policy.
 
-**Algorithm Description (Preemptive)**:
-```
-1. Sort processes by priority (and arrival time)
-2. While processes remain:
-   a. Find highest priority ready process
-   b. Execute for 1 time unit
-   c. Check for higher priority arrivals
-   d. Preempt if necessary
-   e. Apply aging to waiting processes
-3. Calculate metrics
-```
+### Multilevel Feedback Queue
 
-**Algorithm Description (Non-Preemptive)**:
-```
-1. While processes remain:
-   a. Find highest priority ready process
-   b. Execute to completion
-   c. Handle new arrivals
-   d. Apply aging
-3. Calculate metrics
-```
-
-**Time Complexity**: O(n log n) for sorting, O(n²) worst case for execution  
-**Space Complexity**: O(n)
-
-**Aging Mechanism**:
-```cpp
-void applyAging() {
-    for each waiting process:
-        if waiting_time >= threshold:
-            decrease priority value (boost priority)
-            reset waiting time
-}
-```
-
-**Key Implementation Details**:
-- Priority map tracks waiting durations
-- Aging threshold configurable (default: 10 time units)
-- Tie-breaking uses arrival time (FCFS)
+Dynamic queues. Processes move based on behavior. Priority boost prevents starvation.
 - Preemptive mode checks after each time unit
 
 ### 4.3 Multilevel Queue (MLQ)
@@ -348,25 +178,22 @@ void priorityBoost() {
 
 ## 5. Performance Analysis
 
-### Metric Definitions
+### Metrics
 
-**1. Average Waiting Time (AWT)**
-```
-AWT = Σ(waiting_time_i) / n
+- Average Waiting Time: Σ(waiting_time) / n
+- Average Turnaround Time: Σ(turnaround_time) / n
+- Average Response Time: Σ(response_time) / n
+- CPU Utilization: (total - idle - cs_time) / total * 100%
+- Throughput: processes / time
+- Context Switch Overhead: cs_count * cs_time
 
-where waiting_time_i = turnaround_time_i - burst_time_i
-```
+### Algorithm Comparison
 
-**2. Average Turnaround Time (ATAT)**
-```
-ATAT = Σ(turnaround_time_i) / n
-
-where turnaround_time_i = completion_time_i - arrival_time_i
-```
-
-**3. Average Response Time (ART)**
-```
-ART = Σ(response_time_i) / n
+| Metric | RR | Priority P | Priority NP | MLQ | MLFQ |
+|--------|----|------------|-------------|-----|------|
+| Fairness | Excellent | Good | Good | Fair | Excellent |
+| Response | Good | Excellent | Poor | Good | Excellent |
+| Overhead | Medium | Low | Low | Medium | High |
 
 where response_time_i = first_execution_time_i - arrival_time_i
 ```
@@ -416,211 +243,11 @@ Overhead_Percentage = (CS_Count × CS_Time / Total_Time) × 100%
 
 ## 6. Implementation Details
 
-### 6.1 Process State Machine
+### Process State Machine
 
-```
-[NEW] ──arrival──> [READY] ──dispatch──> [RUNNING]
-                      ▲                      │
-                      │                      │
-                      └──preempt/quantum────┘
-                      
-[RUNNING] ──complete──> [TERMINATED]
-```
+NEW → READY → RUNNING → TERMINATED
+With waiting and preemption.
 
-### 6.2 Timeline Event Structure
+### Memory Management
 
-```cpp
-struct ExecutionEvent {
-    int processId;          // -1 for idle/context switch
-    int startTime;          // Event start
-    int endTime;            // Event end
-    bool isContextSwitch;   // True if CS event
-    std::string description; // Human-readable description
-};
-```
-
-### 6.3 Memory Management
-
-**Smart Pointers**:
-- `std::unique_ptr` for scheduler ownership in Simulator
-- `std::unique_ptr` for Visualizer instance
-- Raw pointers for temporary process references (non-owning)
-
-**Vector Usage**:
-- Process lists use `std::vector` for cache efficiency
-- Timeline events stored in vector for sequential access
-
-### 6.4 Configuration Management
-
-```cpp
-struct SchedulerConfig {
-    int timeQuantum = 4;
-    int contextSwitchTime = 1;
-    int numQueues = 3;
-    std::vector<int> quantums;
-    bool agingEnabled = true;
-    int agingThreshold = 10;
-};
-
-struct SimulationConfig {
-    bool realTimeVisualization = true;
-    bool showGanttChart = true;
-    bool showMetrics = true;
-    bool compareAlgorithms = false;
-    int visualizationDelay = 100;
-    bool dynamicArrivals = false;
-    int maxSimulationTime = 1000;
-};
-```
-
-### 6.5 Error Handling
-
-**Strategies**:
-1. Input validation in constructors
-2. Bounds checking in array access
-3. File I/O error checking with informative messages
-4. Graceful degradation (colored output fallback)
-
----
-
-## 7. Testing Strategy
-
-### Unit Tests
-
-**Coverage Areas**:
-1. **Process Class**: State transitions, execution, metrics
-2. **Schedulers**: Algorithm correctness, edge cases
-3. **Metrics**: Calculation accuracy
-4. **Simulator**: Process generation, file I/O
-
-**Test Framework**: Custom test framework with assertion macros
-
-**Example Test**:
-```cpp
-void test_round_robin_context_switches() {
-    RoundRobinScheduler scheduler(2);
-    scheduler.addProcess(Process(1, 0, 10, 0));
-    scheduler.addProcess(Process(2, 0, 10, 0));
-    scheduler.run();
-    
-    const Metrics& metrics = scheduler.getMetrics();
-    ASSERT_GT(metrics.getTotalContextSwitches(), 0);
-}
-```
-
-### Integration Tests
-
-1. **End-to-End Simulation**: Full simulation runs with known inputs
-2. **Algorithm Comparison**: Verify relative performance characteristics
-3. **File I/O**: Load and save process data
-4. **Visualization**: Output format correctness
-
-### Performance Tests
-
-**Benchmark Suite**:
-- 5, 10, 20, 50, 100 processes
-- Measure execution time
-- Verify linear/logarithmic scaling
-- Memory usage profiling
-
-### Test Coverage Goals
-
-- Unit Test Coverage: >80%
-- Critical Path Coverage: 100%
-- Edge Case Coverage: >90%
-
----
-
-## 8. Future Enhancements
-
-### Planned Features
-
-1. **Additional Algorithms**
-   - Shortest Job First (SJF)
-   - Shortest Remaining Time First (SRTF)
-   - Completely Fair Scheduler (CFS)
-   - Earliest Deadline First (EDF)
-
-2. **I/O Simulation**
-   - Process blocking for I/O
-   - I/O queues
-   - Interrupt handling
-
-3. **Multi-Core Support**
-   - Parallel execution simulation
-   - Load balancing algorithms
-   - Core affinity
-
-4. **Advanced Visualization**
-   - GUI interface (Qt/GTK)
-   - Interactive timeline manipulation
-   - Real-time animation
-
-5. **Machine Learning**
-   - Predictive burst time estimation
-   - Adaptive quantum selection
-   - Workload classification
-
-6. **Extended Metrics**
-   - Energy consumption modeling
-   - Cache miss simulation
-   - Memory footprint tracking
-
-### Architecture Evolution
-
-**Phase 1** (Current): Core scheduling algorithms  
-**Phase 2**: I/O and resource management  
-**Phase 3**: Multi-core and distributed systems  
-**Phase 4**: Advanced modeling and ML integration
-
----
-
-## Appendix A: Class Diagram
-
-```
-┌─────────────────────────────────┐
-│          Process                │
-├─────────────────────────────────┤
-│ - pid: int                      │
-│ - priority: int                 │
-│ - burstTime: int                │
-│ - state: ProcessState           │
-├─────────────────────────────────┤
-│ + execute(int): int             │
-│ + setState(ProcessState): void  │
-│ + getPriority(): int            │
-└─────────────────────────────────┘
-                △
-                │
-                │
-┌───────────────┴─────────────────┐
-│        Scheduler (abstract)     │
-├─────────────────────────────────┤
-│ # processes: vector<Process>    │
-│ # currentTime: int              │
-│ # metrics: Metrics              │
-├─────────────────────────────────┤
-│ + run(): void = 0               │
-│ + addProcess(Process): void     │
-│ + getMetrics(): Metrics         │
-└─────────────────────────────────┘
-                △
-                │
-     ┌──────────┼──────────┐
-     │          │          │
-┌────┴───┐  ┌──┴────┐  ┌──┴─────┐
-│   RR   │  │Priority│  │  MLFQ  │
-└────────┘  └────────┘  └────────┘
-```
-
----
-
-## References
-
-1. Silberschatz, A., Galvin, P. B., & Gagne, G. (2018). *Operating System Concepts* (10th ed.).
-2. Tanenbaum, A. S., & Bos, H. (2014). *Modern Operating Systems* (4th ed.).
-3. Love, R. (2010). *Linux Kernel Development* (3rd ed.).
-4. Completely Fair Scheduler Documentation - Linux Kernel
-5. MLFQ Analysis - [UCBerkeley CS162]
-
----
+Smart pointers for ownership, vectors for efficiency.
